@@ -4,8 +4,9 @@
         "node": true
     },
     "extends": [
-        "airbnb-base",
-        "prettier"
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
+        "plugin:prettier/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -22,6 +23,7 @@
     ],
     "rules": {
         "no-console": 1,
-        "prettier/prettier": 2
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/explicit-module-boundary-types": "off"
     }
 }

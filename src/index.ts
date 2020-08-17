@@ -1,11 +1,45 @@
-import express from 'express';
+import container from './application/container/container';
+import { Sequelize } from 'sequelize';
+import IConfig from './application/config/config.interface';
+import IServer from './application/server/server.interface';
 
-const app = express();
+const server: IServer = container.resolve('app');
+const config: IConfig = container.resolve('config');
 
-app.get('/', (req, res) =>
-  res.json({
-    message: 'hello world'
-  })
-);
+class App {
+  private server: IServer;
+  private config: IConfig;
 
-app.listen(8080);
+  constructor(server: IServer, config: IConfig) {
+    this.server = server;
+    this.config = config;
+
+    this.connectToTheDatabase();
+    this.initServer();
+  }
+
+  async connectToTheDatabase(): Promise<void> {
+    const { db } = this.config;
+    const sequelize = new Sequelize(db.name, db.username, db.pass, {
+      dialect: db.dialect,
+      define: {
+        underscored: true
+      }
+    });
+
+    try {
+      await sequelize.sync({ force: false });
+      console.log('Connection has been established successfully.');
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
+    }
+  }
+
+  initServer() {
+    this.server.start();
+  }
+}
+
+const app = new App(server, config);
+
+export default app;
