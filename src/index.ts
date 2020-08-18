@@ -1,7 +1,7 @@
-import container from './application/container/container';
 import { Sequelize } from 'sequelize';
-import IConfig from './application/config/config.interface';
-import IServer from './application/server/server.interface';
+import container from '@infrastructure/container/container';
+import IConfig from '@infrastructure/config/config.interface';
+import IServer from '@infrastructure/server/server.interface';
 
 const server: IServer = container.resolve('app');
 const config: IConfig = container.resolve('config');
@@ -13,12 +13,14 @@ class App {
   constructor(server: IServer, config: IConfig) {
     this.server = server;
     this.config = config;
+  }
 
-    this.connectToTheDatabase();
+  start() {
+    this.connectDatabase();
     this.initServer();
   }
 
-  async connectToTheDatabase(): Promise<void> {
+  async connectDatabase(): Promise<void> {
     const { db } = this.config;
     const sequelize = new Sequelize(db.name, db.username, db.pass, {
       dialect: db.dialect,
@@ -27,6 +29,7 @@ class App {
       }
     });
 
+    /* eslint-disable no-console */
     try {
       await sequelize.sync({ force: false });
       console.log('Connection has been established successfully.');
@@ -42,4 +45,4 @@ class App {
 
 const app = new App(server, config);
 
-export default app;
+app.start();

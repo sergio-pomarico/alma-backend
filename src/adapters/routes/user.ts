@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import IProxy from '../application/container/container.interface';
+import IContainer from '@infrastructure/container/container.interface';
 
-const UserRoutes = ({ UserController }: IProxy): Router => {
+const UserRoutes = ({ UserController }: IContainer): Router => {
   const router = Router();
   router.get('/', UserController.index);
   return router;

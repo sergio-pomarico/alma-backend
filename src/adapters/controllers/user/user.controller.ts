@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
-import IContainer from '../../application/container/container.interface';
-import IUserServices from '../../services/user/user.services.interface';
+import IContainer from '@infrastructure/container/container.interface';
+import IUserServices from '@application/user/user.services.interface';
 
 let _userService: IUserServices;
 

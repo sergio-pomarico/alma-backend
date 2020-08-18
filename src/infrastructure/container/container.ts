@@ -1,8 +1,8 @@
 import { createContainer, asClass, asValue, asFunction } from 'awilix';
 
-import services from '../../services';
-import controllers from '../../controllers';
-import routes from '../../routes';
+import services from '@application/index';
+import controllers from '@adapters/controllers';
+import routes from '@adapters/routes';
 import config from '../config/config';
 import app from '../server/server';
 

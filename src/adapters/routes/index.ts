@@ -4,10 +4,13 @@ import compression from 'compression';
 import cors from 'cors';
 
 import UserRoutes from './user';
-import IProxy from '../application/container/container.interface';
-import { NotFoundMiddlewares, ErrorMiddlewares } from '../middlewares/error';
+import IContainer from '@infrastructure/container/container.interface';
+import {
+  NotFoundMiddlewares,
+  ErrorMiddlewares
+} from '@infrastructure/middlewares/error';
 
-const AppRouter = ({ UserRoutes }: IProxy): Router => {
+const AppRouter = ({ UserRoutes }: IContainer): Router => {
   const router = Router();
   const APIrouter = Router();
 
